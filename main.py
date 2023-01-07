@@ -1,18 +1,17 @@
-from voicefixer.restorer.model import VoiceFixer
+from voicefixer.base import VoiceFixer
 import streamlit as st
 from audio_recorder_streamlit import audio_recorder
 from io import BytesIO
 import soundfile as sf
 st.set_page_config(page_title="VoiceFixer app", page_icon=":notes:")
 st.title("Voice Fixer App :notes:")
-
+voicefixer = VoiceFixer()
 audio_bytes = audio_recorder(
     pause_threshold= 1.5
 )
 try:
     data, samplerate = sf.read(BytesIO(audio_bytes))
-    voicefixer = VoiceFixer(channels=data.shape[1], sample_rate=samplerate)
-
+    print(samplerate)
     sf.write("original.wav",data,samplerate)
     st.audio(audio_bytes, format = "audio/wav")
     if data.shape[0]>=10000:
