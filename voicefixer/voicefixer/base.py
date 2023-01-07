@@ -3,6 +3,10 @@ from voicefixer.tools.pytorch_util import *
 from voicefixer.tools.wav import *
 from voicefixer.restorer.model import VoiceFixer as voicefixer_fe
 import os
+from huggingface_hub import hf_hub_download
+
+path_to_ckpt = hf_hub_download(repo_id="jlmarrugom/voice_fixer", filename="vf.ckpt")
+
 
 EPS = 1e-8
 
@@ -12,7 +16,7 @@ class VoiceFixer(nn.Module):
         super(VoiceFixer, self).__init__()
         self._model = voicefixer_fe(channels=2, sample_rate=44100)
         # print(os.path.join(os.path.expanduser('~'), ".cache/voicefixer/analysis_module/checkpoints/epoch=15_trimed_bn.ckpt"))
-        self.analysis_module_ckpt = "models/vf.ckpt"
+        self.analysis_module_ckpt = path_to_ckpt #"models/vf.ckpt"
         if(not os.path.exists(self.analysis_module_ckpt)):
             raise RuntimeError("Error 0: The checkpoint for analysis module (vf.ckpt) is not found in ~/.cache/voicefixer/analysis_module/checkpoints. \
                                 By default the checkpoint should be download automatically by this program. Something bad may happened.\

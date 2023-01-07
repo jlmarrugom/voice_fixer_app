@@ -3,9 +3,12 @@ import streamlit as st
 from audio_recorder_streamlit import audio_recorder
 from io import BytesIO
 import soundfile as sf
+
 st.set_page_config(page_title="VoiceFixer app", page_icon=":notes:")
 st.title("Voice Fixer App :notes:")
-voicefixer = VoiceFixer()
+#Config files are on voicefixer/base and voicefixer/vocoder/config import
+# They were uploaded on hugging face
+voicefixer = VoiceFixer() 
 audio_bytes = audio_recorder(
     pause_threshold= 1.5
 )
